@@ -15,7 +15,7 @@ const readInput = () => {
           .trim()
           .toUpperCase();
         
-        // first level validation : check if command inputed is valid
+        // syntax and command sequence validation
         let isValid = validation.isValidCmd(cmd, counter);
 
         if (isValid) {

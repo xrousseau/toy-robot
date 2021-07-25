@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const isValidCmd = (cmd, counter) => {
     let isValid = true;
   
-    //ensure 1st cmd is always "PLACE"
+    //ensure first cmd is PLACE
     if (counter === 0 && !isValidFirstPlaceCmd(cmd)) {
         console.log(chalk.redBright('First command must be "PLACE <X>,<Y>,<DIRECTION>"'));
         isValid = false;
@@ -13,10 +13,10 @@ const isValidCmd = (cmd, counter) => {
         console.log(chalk.redBright('Invalid command: Available commands are: PLACE, MOVE, LEFT, REPORT'));
         isValid = false;
     } 
-  
     return isValid;
 };
 
+// test for direction to be a valid value
 const isValidDirection = direction => {
     let testDirection = ['N', 'S', 'E', 'W'].includes(direction)
     if (!testDirection) {
@@ -25,17 +25,16 @@ const isValidDirection = direction => {
     return testDirection;
 }
 
+// test for coordinates to be within board bondaries
 const isValidCoordinate = (coordX, coordY) => {
-    // test if coordinates are within board bondaries
-    const testX = parseInt(coordX) >= 0 && parseInt(coordX) < 5;
-    const testY = parseInt(coordY) >= 0 && parseInt(coordY) < 5;
+
+    const testX = coordX >= 0 && coordX <= 4;
+    const testY = coordY >= 0 && coordY <= 4;
 
     if (!testX || !testY) {
         console.log(chalk.redBright('Action denied: robot would fall off the board.'));
     }
-
     return (testX && testY);
-
 }
 
 const isValidFirstPlaceCmd = cmd => {

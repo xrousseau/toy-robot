@@ -10,16 +10,16 @@ const moveRobot = (direction, coordinate) => {
 
     switch (direction) {
         case 'N':
-            tempCoordinate[Y] = parseInt((parseInt(tempCoordinate[Y]) + 1).toString());
+            tempCoordinate[Y]++;
             break;
         case 'S':
-            tempCoordinate[Y] = parseInt((parseInt(tempCoordinate[Y]) - 1).toString());
+            tempCoordinate[Y]--;
             break;
         case 'W':
-            tempCoordinate[X] = parseInt((parseInt(tempCoordinate[X]) - 1).toString());
+            tempCoordinate[X]--;
             break;
         case 'E':
-            tempCoordinate[X] = parseInt((parseInt(tempCoordinate[X]) + 1).toString());
+            tempCoordinate[X]++;
             break;
       }
 
@@ -53,14 +53,15 @@ const turnRobot = (direction, cmd) => {
 
 const placeRobot = placeParams => {
     let splitSubCommand = placeParams.split(',');
-    let newX = splitSubCommand[0];
-    let newY = splitSubCommand[1];
-    let newDirection = splitSubCommand[2].substring(0,1);
+    let newX = parseInt(splitSubCommand[0]);
+    let newY = parseInt(splitSubCommand[1]);
+    let newDirection = splitSubCommand[2].substring(0,1); //first letter of direction
+
     let testDirection = validation.isValidDirection(newDirection);
     let testCoordinate = validation.isValidCoordinate(newX, newY);
 
     if (testCoordinate && testDirection) {
-        return [parseInt(newX), parseInt(newY), newDirection, true]
+        return [newX, newY, newDirection, true]
     } else {
         return [null, null, null, false]
     }
