@@ -7,6 +7,7 @@ const readInput = () => {
     let coordinate = [0, 0];
     let direction = '';
     let counter = 0;
+    
 
     stdin.addListener('data', function(d) {
         let cmd = d
@@ -14,11 +15,11 @@ const readInput = () => {
           .trim()
           .toUpperCase();
         
-        // first check if command inputed is valid
+        // first level validation : check if command inputed is valid
         let isValid = validation.isValidCmd(cmd, counter);
 
         if (isValid) {
-            // use a REGEX to check if the command is PLACE (with params)
+            // Check if the cmd is PLACE
             if (/PLACE\s\S{5}/.test(cmd)) {
                 // validate placement coordinates
                 [newX, newY, newDirection, isValid] = action.placeRobot(cmd.split(' ')[1]);
@@ -28,6 +29,7 @@ const readInput = () => {
                     direction = newDirection;
                 }
             }
+            // If not a PLACE command, then look for other commands.
             else {
                 switch (cmd) {
                     case "MOVE":
@@ -37,7 +39,6 @@ const readInput = () => {
                             coordinate = [newX, newY];
                             direction = newDirection;
                         }
-
                         break;
                     case ("LEFT"):
                         // set new direction
@@ -50,8 +51,10 @@ const readInput = () => {
                         console.info(`OUTPUT: ${coordinate[0]},${coordinate[1]},${message.getDirectionName(direction)}`);
                 } 
             }
+            
         }
     
+        // if still valid, increment counter. Will enable cmd othen than PLACE 
         if (isValid) counter++;
         
       });  
