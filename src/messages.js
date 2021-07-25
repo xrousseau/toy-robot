@@ -17,7 +17,7 @@ const initMsg = () => {
     console.log(chalk.white('\nToy Robot Programming Challenge\n'));
     console.log(chalk.white('Move robot on a 5X5 board.\n'));
     console.log(chalk.white('Supported commands:\n'));
-    console.log(chalk.green('PLACE 2,3,W\nLEFT\nRIGHT\nMOVE\nREPORT\n'));
+    console.log(chalk.green('PLACE 2,3,WEST\nLEFT\nRIGHT\nMOVE\nREPORT\n'));
   
     console.log(chalk.white('Start typing your commands below:\n'));
   };

@@ -19,7 +19,7 @@ const isValidCmd = (cmd, counter) => {
 const isValidDirection = direction => {
     let testDirection = ['N', 'S', 'E', 'W'].includes(direction)
     if (!testDirection) {
-        console.log(chalk.redBright(`Invalid direction: "${direction}". Possible directions are [(N)orth, (S)outh ,(E)ast ,(W)est]`));
+        console.log(chalk.redBright(`Invalid direction: "${direction}". Possible directions are [(N)ORTH, (S)OUTH ,(E)AST ,(W)EST]`));
     }
     return testDirection;
 }
