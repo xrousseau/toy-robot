@@ -37,26 +37,26 @@ describe('VALIDATE COORDINATES', () => {
 describe('VALIDATE COMMAND', () => {
 
     test('First command is "PLACE"', () => {
-        expect(val.isValidCmd("PLACE 0,0,N", 0)).toBeTruthy();
+        expect(val.isValidCmd("PLACE 0,0,N", 0)).toEqual([true, '']);
     });
 
     test('First command is not "PLACE"', () => {
-        expect(val.isValidCmd("MOVE", 0)).toBeFalsy();
+        expect(val.isValidCmd("MOVE", 0)).toEqual([false, 'First command must be "PLACE <X>,<Y>,<DIRECTION>"']);
     });
 
     test('Next command is a "PLACE"', () => {
-        expect(val.isValidCmd("PLACE 4,4,W", 1)).toBeTruthy();
+        expect(val.isValidCmd("PLACE 4,4,W", 1)).toEqual([true, '']);
     });
 
     test('Next command is invalid', () => {
-        expect(val.isValidCmd("DESTROY", 1)).toBeFalsy();
+        expect(val.isValidCmd("DESTROY", 1)).toEqual([false, 'Invalid command: Available commands are: PLACE, MOVE, LEFT, RIGHT, REPORT']);
     });
 
     test('Next commands are valid', () => {
-        expect(val.isValidCmd("MOVE", 1)).toBeTruthy();
-        expect(val.isValidCmd("LEFT", 1)).toBeTruthy();
-        expect(val.isValidCmd("RIGHT", 1)).toBeTruthy();
-        expect(val.isValidCmd("REPORT", 1)).toBeTruthy();
+        expect(val.isValidCmd("MOVE", 1)).toEqual([true, '']);
+        expect(val.isValidCmd("LEFT", 1)).toEqual([true, '']);
+        expect(val.isValidCmd("RIGHT", 1)).toEqual([true, '']);
+        expect(val.isValidCmd("REPORT", 1)).toEqual([true, '']);
     });
 
 });

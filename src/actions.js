@@ -30,12 +30,12 @@ const move = () => {
 
     // validate potential coordinate
     if  (!validation.isValidCoordinate(tempCoordinate[X], tempCoordinate[Y])) {
-        return [false, ""];
+        return [false, 'Action denied: Robot would fall off the board.'];
     };
 
     coordinate[X] = tempCoordinate[X];
     coordinate[Y] = tempCoordinate[Y];
-    return [true, null];
+    return [true, ""];
 
 };
 
@@ -63,18 +63,19 @@ const turnRight = () => {
 
 const place = (newX, newY, newDirection) => {
 
+
     if (!validation.isValidDirection(newDirection)) {
-        return [false, "invalid direction"];
+        return [false, 'Invalid direction.'];
     };
 
     if (!validation.isValidCoordinate(newX, newY)) {
-        return [false, "invalid coordinate"];
+        return [false, 'Invalid Coordinate: Robot would fall off the board.'];
     };
 
     coordinate[X] = newX;
     coordinate[Y] = newY;
     direction = newDirection;
-    return [true, null];
+    return [true, ""];
 };
 
 const report = () => {
