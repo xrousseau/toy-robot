@@ -5,7 +5,6 @@ const Y = 1;
 
 let coordinate = [0, 0];
 let direction = '';
-let firstCmd = true;
 const directions = ['N', 'E', 'S', 'W'];
 
 const move = () => {
@@ -40,6 +39,7 @@ const move = () => {
 };
 
 const turnLeft = () => {
+
     directionIndex = directions.indexOf(direction);
     directionIndex--;
 
@@ -50,7 +50,8 @@ const turnLeft = () => {
     return [true, direction];
 };
 
-const turnRight = () => {   
+const turnRight = () => {
+
     directionIndex = directions.indexOf(direction);
     directionIndex++;
 
@@ -62,7 +63,6 @@ const turnRight = () => {
 };
 
 const place = (newX, newY, newDirection) => {
-
 
     if (!validation.isValidDirection(newDirection)) {
         return [false, 'Invalid direction.'];

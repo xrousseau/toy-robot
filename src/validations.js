@@ -6,7 +6,7 @@ const isValidCmd = (cmd, firstMove) => {
     let msg = '';
   
     //ensure first cmd is PLACE
-    if (firstMove === 0 && !isValidFirstPlaceCmd(cmd)) {
+    if (firstMove && !isValidFirstPlaceCmd(cmd)) {
         msg = 'First command must be "PLACE <X>,<Y>,<DIRECTION>"';
         isValid = false;
     }

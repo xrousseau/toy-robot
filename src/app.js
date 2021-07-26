@@ -6,9 +6,8 @@ const chalk = require('chalk');
 const readInput = () => {
     let stdin = process.openStdin();
     let firstMove = true;
-    let msg = null;
     let isValid = false;
-    
+    let msg = "";
 
     stdin.addListener('data', function(d) {
         let cmd = d
@@ -31,12 +30,15 @@ const readInput = () => {
                 let newY = parseInt(splitSubCommand[1]);
                 let newDirection = splitSubCommand[2].substring(0,1); //first letter of direction
 
-
                 [isValid, msg] = robot.place(newX, newY, newDirection);
                 
                 if (isValid) { // if valid, set new coordinate and direction
                     coordinate = [newX, newY];
                     direction = newDirection;
+                    firstMove = false
+                }
+                else {
+                    console.log(chalk.redBright(msg));
                 }
             }
             // If not a PLACE command, then look for other commands.
@@ -61,8 +63,6 @@ const readInput = () => {
         else {
             console.log(chalk.redBright(msg));
         }
-    
-        if (isValid) firstMove = false;
         
       });  
 
