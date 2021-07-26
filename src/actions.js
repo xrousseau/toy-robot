@@ -1,13 +1,17 @@
 const validation = require('./validations');
+const msg = require('./messages');
 
 const X = 0;
 const Y = 1;
 
 let coordinate = [0, 0];
 let direction = '';
+let firstMove = true;
 const directions = ['N', 'E', 'S', 'W'];
 
 const move = () => {
+
+    if (firstMove) return [false, msg.errorFirstCmd];
 
     // compute potential coordinate
     let tempCoordinate = coordinate.slice(0);
@@ -40,6 +44,8 @@ const move = () => {
 
 const turnLeft = () => {
 
+    if (firstMove) return [false, msg.errorFirstCmd];
+
     directionIndex = directions.indexOf(direction);
     directionIndex--;
 
@@ -51,6 +57,8 @@ const turnLeft = () => {
 };
 
 const turnRight = () => {
+
+    if (firstMove) return [false, msg.errorFirstCmd];
 
     directionIndex = directions.indexOf(direction);
     directionIndex++;
@@ -75,11 +83,14 @@ const place = (newX, newY, newDirection) => {
     coordinate[X] = newX;
     coordinate[Y] = newY;
     direction = newDirection;
+    firstMove = false;
     return [true, ""];
 };
 
 const report = () => {
-    return [coordinate, direction];
+    if (firstMove) return [false, msg.errorFirstCmd];
+    
+    return [true, `${coordinate[X]},${coordinate[Y]},${msg.getDirectionName(direction)}`];
 };
 
 module.exports = { move, place, turnLeft, turnRight, report };

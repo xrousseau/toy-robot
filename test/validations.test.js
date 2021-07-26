@@ -40,10 +40,6 @@ describe('VALIDATE COMMAND', () => {
         expect(val.isValidCmd("PLACE 0,0,N", 0)).toEqual([true, '']);
     });
 
-    test('First command is not "PLACE"', () => {
-        expect(val.isValidCmd("MOVE", 0)).toEqual([false, 'First command must be "PLACE <X>,<Y>,<DIRECTION>"']);
-    });
-
     test('Next command is a "PLACE"', () => {
         expect(val.isValidCmd("PLACE 4,4,W", 1)).toEqual([true, '']);
     });
