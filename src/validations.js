@@ -1,19 +1,20 @@
 const chalk = require('chalk');
 
 // High level sequence and syntax validation
-const isValidCmd = (cmd, counter) => {
+const isValidCmd = (cmd, firstMove) => {
     let isValid = true;
+    let msg = null;
   
     //ensure first cmd is PLACE
-    if (counter === 0 && !isValidFirstPlaceCmd(cmd)) {
-        console.log(chalk.redBright('First command must be "PLACE <X>,<Y>,<DIRECTION>"'));
+    if (firstMove === 0 && !isValidFirstPlaceCmd(cmd)) {
+        msg = 'First command must be "PLACE <X>,<Y>,<DIRECTION>"';
         isValid = false;
     }
     else if (!isValidSubsequentCmd(cmd)) {
-        console.log(chalk.redBright('Invalid command: Available commands are: PLACE, MOVE, LEFT, REPORT'));
+        msg = 'Invalid command: Available commands are: PLACE, MOVE, LEFT, REPORT';
         isValid = false;
     } 
-    return isValid;
+    return [isValid, msg];
 };
 
 // test for direction to be a valid value

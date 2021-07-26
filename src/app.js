@@ -1,12 +1,13 @@
-const action = require('./actions.js');
+const robot = require('./actions.js');
 const validation = require('./validations');
-const message = require('./messages')
+const message = require('./messages');
+const chalk = require('chalk');
 
 const readInput = () => {
     let stdin = process.openStdin();
-    let coordinate = [0, 0];
-    let direction = '';
-    let counter = 0;
+    let firstMove = true;
+    let msg = null;
+    let isValid = false;
     
 
     stdin.addListener('data', function(d) {
@@ -16,13 +17,22 @@ const readInput = () => {
           .toUpperCase();
         
         // syntax and command sequence validation
-        let isValid = validation.isValidCmd(cmd, counter);
+        
+        [isValid, msg] = validation.isValidCmd(cmd, firstMove);
 
         if (isValid) {
             // Check if the cmd is PLACE
             if (/PLACE\s\S{5}/.test(cmd)) {
                 // validate placement coordinates
-                [newX, newY, newDirection, isValid] = action.placeRobot(cmd.split(' ')[1]);
+
+                let placeParams = cmd.split(' ')[1];
+                let splitSubCommand = placeParams.split(',');
+                let newX = parseInt(splitSubCommand[0]);
+                let newY = parseInt(splitSubCommand[1]);
+                let newDirection = splitSubCommand[2].substring(0,1); //first letter of direction
+
+
+                [isValid, msg] = robot.place(newX, newY, newDirection);
                 
                 if (isValid) { // if valid, set new coordinate and direction
                     coordinate = [newX, newY];
@@ -33,27 +43,26 @@ const readInput = () => {
             else {
                 switch (cmd) {
                     case "MOVE":
-                        [newX, newY, newDirection, isValid] = action.moveRobot(direction, coordinate);
-
-                        if (isValid) { // when valid, set new computed coordinate
-                            coordinate = [newX, newY];
-                            direction = newDirection;
-                        }
+                        [isValid, msg] = robot.move();
+                        if (!isValid) console.log(chalk.redBright(msg));
                         break;
                     case ("LEFT"):
-                        direction = action.turnLeftRobot(direction);
+                        direction = robot.turnLeft();
                         break;
                     case ("RIGHT"):
-                        direction = action.turnRightRobot(direction);
+                        direction = robot.turnRight();
                         break;
                     case "REPORT":
-                        console.info(`OUTPUT: ${coordinate[0]},${coordinate[1]},${message.getDirectionName(direction)}`);
+                        [coordinate, direction] = robot.report();
+                        console.info(chalk.green(`${coordinate[0]},${coordinate[1]},${message.getDirectionName(direction)}`));
                 } 
             }
-            
+        }
+        else {
+            console.log(chalk.redBright(msg));
         }
     
-        if (isValid) counter++;
+        if (isValid) firstMove = false;
         
       });  
 

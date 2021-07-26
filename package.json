@@ -4,7 +4,7 @@
   "description": "Code test for interview",
   "main": "app.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose",
     "start": "node ./src/app.js"
   },
   "author": "David Rousseau",

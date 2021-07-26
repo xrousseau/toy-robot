@@ -1,17 +1,17 @@
-const action = require('../src/actions');
+const robot = require('../src/actions');
 
 describe('PLACE ROBOT', () => {
 
     test('Valid robot placement action', () => {
-        expect(action.placeRobot('0,0,N')).toEqual([0, 0, "N", true]);
+        expect(robot.place(0,0,'N')).toEqual([true, null]);
     });
 
     test('Invalid cordinate in robot placement action', () => {
-        expect(action.placeRobot('-1,6,E')).toEqual([null, null, null, false]);
+        expect(robot.place(-1,6,'E')).toEqual([false, "invalid coordinate"]);
     });
 
     test('Invalid direction in robot placement action', () => {
-        expect(action.placeRobot('0,0,F')).toEqual([null, null, null, false]);
+        expect(robot.place(0,0,'F')).toEqual([false, "invalid direction"]);
     });
 
 });
@@ -19,47 +19,53 @@ describe('PLACE ROBOT', () => {
 describe('MOVE ROBOT', () => {
 
     test('Valid robot movement action', () => {
-        expect(action.moveRobot('N', [0,0])).toEqual([0, 1, 'N', true]);
+        robot.place(0,0,'N');
+        expect(robot.move()).toEqual([true, null]);
     });
 
     test('Invalid robot movement action moving W', () => {
-        expect(action.moveRobot('W', [0,0])).toEqual([0, 0, 'W', false]);
+        robot.place(0,0,'W');
+        expect(robot.move()).toEqual([false, ""]);
     });
 
     test('Invalid robot movement action moving E', () => {
-        expect(action.moveRobot('E', [4,0])).toEqual([4, 0, 'E', false]);
+        robot.place(4,0,'E');
+        expect(robot.move()).toEqual([false, ""]);
     });
 
     test('Invalid robot movement action moving N', () => {
-        expect(action.moveRobot('N', [0,4])).toEqual([0, 4, 'N', false]);
+        robot.place(0,4,'N');
+        expect(robot.move()).toEqual([false, ""]);
     });
 
     test('Invalid robot movement action moving S', () => {
-        expect(action.moveRobot('S', [0,0])).toEqual([0, 0, 'S', false]);
+        robot.place(0,0,'S');
+        expect(robot.move()).toEqual([false, ""]);
     });
 
 });
 
+
 describe('TURN ROBOT', () => {
 
     test('Looking N -> turning LEFT', () => {
-        expect(action.turnLeftRobot('N')).toBe('W');
+        robot.place(0,0,'N');
+        expect(robot.turnLeft()).toEqual([true, 'W']);
     });
 
     test('Looking N -> turning RIGHT', () => {
-        expect(action.turnRightRobot('N')).toBe('E');
+        robot.place(0,0,'N');
+        expect(robot.turnRight('N')).toEqual([true, 'E']);
     });
 
     test('Looking W -> turning LEFT', () => {
-        expect(action.turnLeftRobot('W')).toBe('S');
+        robot.place(0,0,'W');
+        expect(robot.turnLeft('W')).toEqual([true, 'S']);
     });
 
     test('Looking W -> turning RIGHT', () => {
-        expect(action.turnRightRobot('W')).toBe('N');
-    });
-
-    test('Looking WEST -> turning RIGHT', () => {
-        expect(action.turnRightRobot('WEST')).toBe('N');
+        robot.place(0,0,'W');
+        expect(robot.turnRight('W')).toEqual([true, 'N']);
     });
 
 });
