@@ -41,11 +41,10 @@ const readInput = () => {
                         }
                         break;
                     case ("LEFT"):
-                        // set new direction
-                        direction = action.turnRobot(direction, cmd);
+                        direction = action.turnLeftRobot(direction);
                         break;
                     case ("RIGHT"):
-                        direction = action.turnRobot(direction, cmd);
+                        direction = action.turnRightRobot(direction);
                         break;
                     case "REPORT":
                         console.info(`OUTPUT: ${coordinate[0]},${coordinate[1]},${message.getDirectionName(direction)}`);
@@ -54,7 +53,6 @@ const readInput = () => {
             
         }
     
-        // if still valid, increment counter. Will enable cmd othen than PLACE 
         if (isValid) counter++;
         
       });  

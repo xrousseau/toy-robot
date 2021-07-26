@@ -43,23 +43,23 @@ describe('MOVE ROBOT', () => {
 describe('TURN ROBOT', () => {
 
     test('Looking N -> turning LEFT', () => {
-        expect(action.turnRobot('N', 'LEFT')).toBe('W');
+        expect(action.turnLeftRobot('N')).toBe('W');
     });
 
     test('Looking N -> turning RIGHT', () => {
-        expect(action.turnRobot('N', 'RIGHT')).toBe('E');
+        expect(action.turnRightRobot('N')).toBe('E');
     });
 
     test('Looking W -> turning LEFT', () => {
-        expect(action.turnRobot('W', 'LEFT')).toBe('S');
+        expect(action.turnLeftRobot('W')).toBe('S');
     });
 
     test('Looking W -> turning RIGHT', () => {
-        expect(action.turnRobot('W', 'RIGHT')).toBe('N');
+        expect(action.turnRightRobot('W')).toBe('N');
     });
 
     test('Looking WEST -> turning RIGHT', () => {
-        expect(action.turnRobot('WEST', 'RIGHT')).toBe('N');
+        expect(action.turnRightRobot('WEST')).toBe('N');
     });
 
 });

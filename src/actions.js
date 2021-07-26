@@ -31,21 +31,23 @@ const moveRobot = (direction, coordinate) => {
     return [coordinate[X], coordinate[Y], direction, false];
 };
 
-const turnRobot = (direction, cmd) => {
+const turnLeftRobot = (direction) => {
     const directions = ['N', 'E', 'S', 'W'];
     directionIndex = directions.indexOf(direction);
-
-    switch (cmd) {
-        case "LEFT":
-            directionIndex--;
-            break;
-        case "RIGHT":
-            directionIndex++
-            break;
-    }
+    directionIndex--;
 
     // out of array bound. go back to the end or begining of the array
     if (directionIndex < 0) directionIndex = 3;
+
+    return directions[directionIndex]
+};
+
+const turnRightRobot = (direction) => {
+    const directions = ['N', 'E', 'S', 'W'];
+    directionIndex = directions.indexOf(direction);
+    directionIndex++;
+
+    // out of array bound. go back to the end or begining of the array
     if (directionIndex > 3) directionIndex = 0;
 
     return directions[directionIndex]
@@ -67,4 +69,4 @@ const placeRobot = placeParams => {
     }
 }
 
-module.exports = { moveRobot, turnRobot, placeRobot };
+module.exports = { moveRobot, placeRobot, turnLeftRobot, turnRightRobot };
