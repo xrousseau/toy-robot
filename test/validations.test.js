@@ -36,19 +36,13 @@ describe('VALIDATE COORDINATES', () => {
 
 describe('VALIDATE COMMAND', () => {
 
-    test('First command is "PLACE"', () => {
-        expect(val.isValidCmd("PLACE 0,0,N", 0)).toEqual([true, '']);
-    });
-
-    test('Next command is a "PLACE"', () => {
-        expect(val.isValidCmd("PLACE 4,4,W", 1)).toEqual([true, '']);
-    });
-
-    test('Next command is invalid', () => {
+    test('Invalid cmd', () => {
         expect(val.isValidCmd("DESTROY", 1)).toEqual([false, 'Invalid command: Available commands are: PLACE, MOVE, LEFT, RIGHT, REPORT']);
     });
 
-    test('Next commands are valid', () => {
+    test('valid cmds', () => {
+        expect(val.isValidCmd("PLACE 0,0,N")).toEqual([true, '']);
+        expect(val.isValidCmd("PLACE 0,0,NORTH")).toEqual([true, '']);
         expect(val.isValidCmd("MOVE", 1)).toEqual([true, '']);
         expect(val.isValidCmd("LEFT", 1)).toEqual([true, '']);
         expect(val.isValidCmd("RIGHT", 1)).toEqual([true, '']);

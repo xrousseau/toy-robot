@@ -1,13 +1,13 @@
-const robot = require('./actions.js');
+const robotModule = new require('./robot.js');
 const validation = require('./validations');
 const message = require('./messages');
 const chalk = require('chalk');
 
 const readInput = () => {
     let stdin = process.openStdin();
-    //let firstMove = true;
     let isValid = false;
     let msg = "";
+    const robot = new robotModule.Robot();
 
     stdin.addListener('data', function(d) {
         let cmd = d
@@ -41,20 +41,17 @@ const readInput = () => {
             switch (cmd) {
                 case "MOVE":
                     [isValid, msg] = robot.move();
-                    //if (!isValid) console.log(chalk.redBright(msg));
                     break;
                 case ("LEFT"):
                     [isValid, msg] = robot.turnLeft();
-                    //if (!isValid) console.log(chalk.redBright(msg));
                     break;
                 case ("RIGHT"):
                     [isValid, msg] = robot.turnRight();
-                    //if (!isValid) console.log(chalk.redBright(msg));
                     break;
                 case "REPORT":
                     [isValid, msg] = robot.report();
-                    //if (!isValid) console.log(chalk.redBright(msg));
                     if (isValid) console.info(chalk.green(msg));
+                    break;
             }
             if (!isValid) console.log(chalk.redBright(msg));
         }
